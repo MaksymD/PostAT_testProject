@@ -23,7 +23,7 @@ public abstract class BaseTest
     public IWebDriver InitializeDriver()
     {
         LocalDriverBuilder builder = new LocalDriverBuilder();
-        this.startingUrl = "https://www.post.at/";
+        this.startingUrl = "https://www.post.at/de";
         var driver = builder.Launch(targetBrowser, this.startingUrl);
         return driver;
     }

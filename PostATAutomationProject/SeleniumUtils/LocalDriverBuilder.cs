@@ -24,6 +24,7 @@ internal LocalDriverBuilder(WebDriverFactory factory)
     {
         var driver = CreateWebDriver(browserTarget);
         driver.Navigate().GoToUrl(startingURL);
+        driver.Manage().Window.Maximize();
         return driver;
     }
 
