@@ -9,7 +9,13 @@ public class LocalDriverBuilder
 {
     private readonly WebDriverFactory factory;
 
-    internal LocalDriverBuilder(WebDriverFactory factory)
+    public LocalDriverBuilder() : this(new WebDriverFactory())
+    {
+        
+    }
+
+
+internal LocalDriverBuilder(WebDriverFactory factory)
     {
         this.factory = factory;
     }
