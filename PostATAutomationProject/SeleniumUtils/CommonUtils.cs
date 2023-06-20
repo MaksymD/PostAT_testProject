@@ -17,7 +17,7 @@ public class CommonUtils
             if (browserLogs.Count > 0)
             {
                 var filePath = $"{Path.GetTempPath()}ConsoleLogs-{Guid.NewGuid()}.txt";
-                File.WriteAllText(filePath, "Begin Log: ");
+                File.WriteAllText(filePath, "Begin Log:\n ");
 
                 foreach (var log in browserLogs)
                 {

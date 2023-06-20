@@ -1,4 +1,5 @@
 ﻿using System;
+using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
@@ -13,8 +14,9 @@ class StartPage
     // Locators
     private readonly By inputSearch_locator = By.XPath("(//input[@name = 'suche'])[2]");
     private readonly By buttonAcceptCookies_locator = By.XPath("//button[@id = 'onetrust-accept-btn-handler']");
-    private readonly By buttonLogin_locator =
-        By.XPath("(//span[contains(text(), 'Einloggen / Registrieren')]//ancestor::button)[1]");
+    private readonly By buttonLogin_locator = By.XPath("(//span[contains(text(), 'Einloggen / Registrieren')]//ancestor::button)[1]");
+    private readonly By buttonUserContextmenu_locator = By.XPath("//button[@id = 'contextmenu-lg']");
+    private readonly By buttonUserContextmenuLogout_locator = By.XPath("(//nav[@aria-hidden = 'true'])[1]/a[contains(text(), 'Ausloggen')]");
 
     public StartPage(IWebDriver driver)
     {
@@ -25,6 +27,20 @@ class StartPage
     public String GetPageTitle()
     {
         return driver.Title;
+    }
+    
+    public bool waitTillElementIsClickable(By elementLocator)
+    
+    {
+        try
+        {
+            wait.Until(ExpectedConditions.ElementToBeClickable(elementLocator));
+            return true; 
+        }
+        catch (WebDriverTimeoutException)
+        {
+            return false;
+        }
     }
 
     public void EnterSearchText(string searchTerm)
@@ -44,10 +60,30 @@ class StartPage
 
     public UserLoginPage selectLoginInHeaderbar()
     {
-        var buttonLogin = driver.FindElement(buttonLogin_locator);
-        wait.Until(x => ExpectedConditions.ElementToBeClickable(buttonLogin));
-        buttonLogin.Click();
+        wait.Until(x => ExpectedConditions.InvisibilityOfElementLocated(buttonLogin_locator));
+        IWebElement elementButtonLogin = driver.FindElement(buttonLogin_locator);
+        IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)driver;
+        jsExecutor.ExecuteScript("arguments[0].click();", elementButtonLogin);
         Thread.Sleep(1000);
         return new UserLoginPage(driver);
+    }
+    
+    public void clickLogoutButton()
+    {
+        var buttonUserContextmenu = driver.FindElement(buttonUserContextmenu_locator);
+        wait.Until(x => ExpectedConditions.ElementToBeClickable(buttonUserContextmenu));
+        buttonUserContextmenu.Click();
+        Thread.Sleep(1000);
+        var buttonUserContextmenuLogout = driver.FindElement(buttonUserContextmenuLogout_locator);
+        wait.Until(x => ExpectedConditions.ElementToBeClickable(buttonUserContextmenuLogout));
+        buttonUserContextmenuLogout.Click();
+    }
+
+    public void CheckIfElementExistByLocator(By xPath)
+    {
+        wait.Until(ExpectedConditions.ElementExists(xPath));
+        // Assert that the element exists in the DOM
+        bool elementExists = driver.FindElements(xPath).Count > 0;
+        Assert.IsTrue(elementExists);
     }
 }

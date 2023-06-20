@@ -31,4 +31,16 @@ class UserLoginPage
         wait.Until(x => buttonLogin).Click();
         Thread.Sleep(500);
     }
+    
+    public void inputLoginCredentials(string email, string password)
+    {
+        var inputUser = driver.FindElement(inputUser_locator);
+        wait.Until(x => inputUser).SendKeys(email);
+        Thread.Sleep(500);
+        
+        var inputPassword = driver.FindElement(inputPassword_locator);
+        wait.Until(x => inputPassword).SendKeys(password);
+        Thread.Sleep(500);
+    }
+    
 }
