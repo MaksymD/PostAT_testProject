@@ -1,0 +1,28 @@
+﻿{
+  "StartPage": {
+    "Locators": {
+      "inputSearch_locator": "(//input[@name = 'suche'])[2]",
+      "buttonAcceptCookies_locator": "//button[@id = 'onetrust-accept-btn-handler']",
+      "buttonLogin_locator": "(//span[contains(text(), 'Einloggen / Registrieren')]//ancestor::button)[1]",
+      "buttonUserContextmenu_locator": "//button[@id = 'contextmenu-lg']",
+      "buttonUserContextmenuLogout_locator": "(//nav[@aria-hidden = 'true'])[1]/a[contains(text(), 'Ausloggen')]"
+    },
+    "TestData": {
+      "start_URL": "https://www.post.at/de"
+    }
+  },
+  "UserLoginPage": {
+    "Locators": {
+      "buttonLogin_locator": "//button[contains(text(), 'Jetzt einloggen')]",
+      "inputUser_locator": "//input[@id = 'signInName']",
+      "inputPassword_locator": "//input[@id = 'password']"
+    },
+    "TestData": {
+      "email": "max.musterman.postat.test@gmail.com",
+      "password": "postATtest2023!",
+      "email_invalid": "test",
+      "email_wrong": "test@gmail.com",
+      "password_wrong": "test"
+    }
+  }
+}
