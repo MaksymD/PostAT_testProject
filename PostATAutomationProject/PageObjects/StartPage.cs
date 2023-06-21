@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
@@ -10,13 +11,14 @@ class StartPage
 {
     IWebDriver driver;
     WebDriverWait wait;
+    static IConfiguration configuration;
 
     // Locators
-    private readonly By inputSearch_locator = By.XPath("(//input[@name = 'suche'])[2]");
-    private readonly By buttonAcceptCookies_locator = By.XPath("//button[@id = 'onetrust-accept-btn-handler']");
-    private readonly By buttonLogin_locator = By.XPath("(//span[contains(text(), 'Einloggen / Registrieren')]//ancestor::button)[1]");
-    private readonly By buttonUserContextmenu_locator = By.XPath("//button[@id = 'contextmenu-lg']");
-    private readonly By buttonUserContextmenuLogout_locator = By.XPath("(//nav[@aria-hidden = 'true'])[1]/a[contains(text(), 'Ausloggen')]");
+    private readonly By inputSearch_locator = By.XPath(configuration.GetSection("StartPage:Locators:inputSearch_locator").Value);
+    private readonly By buttonAcceptCookies_locator = By.XPath(configuration.GetSection("StartPage:Locators:buttonAcceptCookies_locator").Value);
+    private readonly By buttonLogin_locator = By.XPath(configuration.GetSection("StartPage:Locators:buttonLogin_locator").Value);
+    private readonly By buttonUserContextmenu_locator = By.XPath(configuration.GetSection("StartPage:Locators:buttonUserContextmenu_locator").Value);
+    private readonly By buttonUserContextmenuLogout_locator = By.XPath(configuration.GetSection("StartPage:Locators:buttonUserContextmenuLogout_locator").Value);
 
     public StartPage(IWebDriver driver)
     {

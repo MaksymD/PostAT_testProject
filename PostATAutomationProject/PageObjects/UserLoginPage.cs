@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Extensions.Configuration;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 
@@ -8,11 +9,12 @@ class UserLoginPage
 {
     IWebDriver driver;
     WebDriverWait wait;
+    static IConfiguration configuration;
 
     // Locators
-    private readonly By buttonLogin_locator = By.XPath("//button[contains(text(), 'Jetzt einloggen')]");
-    private readonly By inputUser_locator = By.XPath("//input[@id = 'signInName']");
-    private readonly By inputPassword_locator = By.XPath("//input[@id = 'password']");
+    private readonly By buttonLogin_locator = By.XPath(configuration.GetSection("UserLoginPage:Locators:buttonLogin_locator").Value);
+    private readonly By inputUser_locator = By.XPath(configuration.GetSection("UserLoginPage:Locators:inputUser_locator").Value);
+    private readonly By inputPassword_locator = By.XPath(configuration.GetSection("UserLoginPage:Locators:inputPassword_locator").Value);
 
     public UserLoginPage(IWebDriver driver)
     {

@@ -1,10 +1,14 @@
 ﻿### TODO:
-
+configuration.GetSection("StartPage:Locators:buttonCookiesAccept_locator").Value
 ***- add property file***
 
 ***- improve reporting***
 
 ### LOGIN DATA:
+#### Gmail:
+- EMAIL-ADRESSE: max.musterman.postat.test@gmail.com
+- PASSWORT: postATtest2023
+#### Post.at:
 - EMAIL-ADRESSE: max.musterman.postat.test@gmail.com
 - PASSWORT: postATtest2023!
 - KUNDENNUMMER: 5295007

@@ -4,25 +4,33 @@
       "inputSearch_locator": "(//input[@name = 'suche'])[2]",
       "buttonAcceptCookies_locator": "//button[@id = 'onetrust-accept-btn-handler']",
       "buttonLogin_locator": "(//span[contains(text(), 'Einloggen / Registrieren')]//ancestor::button)[1]",
+      "buttonLogout_locator": "//nav[@aria-hidden = 'true']/a[contains(text(), 'Ausloggen')]",
       "buttonUserContextmenu_locator": "//button[@id = 'contextmenu-lg']",
       "buttonUserContextmenuLogout_locator": "(//nav[@aria-hidden = 'true'])[1]/a[contains(text(), 'Ausloggen')]"
     },
     "TestData": {
-      "start_URL": "https://www.post.at/de"
+      "start_URL": "https://www.post.at/de",
+      "startPageTitle": "Post AG - PostAG"
     }
   },
   "UserLoginPage": {
     "Locators": {
       "buttonLogin_locator": "//button[contains(text(), 'Jetzt einloggen')]",
       "inputUser_locator": "//input[@id = 'signInName']",
-      "inputPassword_locator": "//input[@id = 'password']"
+      "inputPassword_locator": "//input[@id = 'password']",
+      "textEmailPassword_locator": "//p[contains(@role, 'alert') and contains(text(), 'Bitte E-Mail Adresse eingeben.')]",
+      "textErrorPassword_locator": "//p[contains(@role, 'alert') and contains(text(), 'Bitte Passwort eingeben.')]",
+      "textErrorEmailInvalid_locator": "//p[contains(@role, 'alert') and contains(text(), 'Ungültige E-Mail Adresse.')]",
+      "textErrorLoginFailedH2_locator": "//h2[contains(text(), 'Login fehlgeschlagen')]",
+      "textErrorLoginFailedH3_locator": "//h3[contains(text(), 'Bitte versuchen Sie es nochmals!')]"
     },
     "TestData": {
       "email": "max.musterman.postat.test@gmail.com",
       "password": "postATtest2023!",
       "email_invalid": "test",
       "email_wrong": "test@gmail.com",
-      "password_wrong": "test"
+      "password_wrong": "test",
+      "userLoginPageTitle": "Userlogin - Default"
     }
   }
 }

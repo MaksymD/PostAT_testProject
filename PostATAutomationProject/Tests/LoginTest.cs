@@ -27,11 +27,11 @@ public class LoginTest : BaseTest
                 // navigate to "post.at" Page and check title
                 WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(60));
                 StartPage startPage = new StartPage(driver);
-                Assert.That("Post AG - PostAG", Is.EqualTo(startPage.GetPageTitle()));
+                Assert.That(configuration.GetSection("StartPage:TestData:startPageTitle").Value, Is.EqualTo(startPage.GetPageTitle()));
                 log.Info("Post AG start Page opened.");
                 
                 // click accept cookies button
-                bool elementCookiesExists = driver.FindElements(By.XPath("//button[@id = 'onetrust-accept-btn-handler']")).Count > 0;
+                bool elementCookiesExists = driver.FindElements(By.XPath(configuration.GetSection("StartPage:Locators:buttonAcceptCookies_locator").Value)).Count > 0;
                 if (elementCookiesExists)
                 {
                     startPage.AcceptCookie();
@@ -44,21 +44,21 @@ public class LoginTest : BaseTest
                 
                 // navigate to "login.post.at" Page and check title
                 UserLoginPage userLoginPage = new UserLoginPage(driver);
-                Assert.That("Userlogin - Default", Is.EqualTo(userLoginPage.GetPageTitle()));
+                Assert.That(configuration.GetSection("UserLoginPage:TestData:userLoginPageTitle").Value, Is.EqualTo(userLoginPage.GetPageTitle()));
                 log.Info("User Login Post AG Page opened.");
                 
                 // click 'Jetzt einloggen' button and check if user successfully logged in
-                userLoginPage.inputLoginCredentials("max.musterman.postat.test@gmail.com", "postATtest2023!");
+                userLoginPage.inputLoginCredentials(configuration.GetSection("UserLoginPage:TestData:email").Value, configuration.GetSection("UserLoginPage:TestData:password").Value);
                 userLoginPage.clickLoginButton();
-                startPage.waitTillElementIsClickable(By.XPath("//button[@id = 'contextmenu-lg']"));
-                Assert.That("Post AG - PostAG", Is.EqualTo(startPage.GetPageTitle()));
-                startPage.CheckIfElementExistByLocator(By.XPath("//nav[@aria-hidden = 'true']/a[contains(text(), 'Ausloggen')]"));
+                startPage.waitTillElementIsClickable(By.XPath(configuration.GetSection("StartPage:Locators:buttonUserContextmenu_locator").Value));
+                Assert.That(configuration.GetSection("StartPage:TestData:startPageTitle").Value, Is.EqualTo(startPage.GetPageTitle()));
+                startPage.CheckIfElementExistByLocator(By.XPath(configuration.GetSection("StartPage:Locators:buttonLogout_locator").Value));
                 log.Info("User successfully logged in.");
                 
                 // click logout button
                 startPage.clickLogoutButton();
                 Thread.Sleep(2000);
-                Assert.True(driver.FindElement(By.XPath("(//span[contains(text(), 'Einloggen / Registrieren')]//ancestor::button)[1]")).Displayed);
+                Assert.True(driver.FindElement(By.XPath(configuration.GetSection("StartPage:Locators:buttonLogin_locator").Value)).Displayed);
                 log.Info("User successfully logged out.");
 
             }
@@ -79,11 +79,11 @@ public class LoginTest : BaseTest
             {
                 // navigate to "post.at" Page and check title
                 StartPage startPage = new StartPage(driver);
-                Assert.That("Post AG - PostAG", Is.EqualTo(startPage.GetPageTitle()));
+                Assert.That(configuration.GetSection("StartPage:TestData:startPageTitle").Value, Is.EqualTo(startPage.GetPageTitle()));
                 log.Info("Post AG start Page opened.");
                 
                 // click accept cookies button
-                bool elementCookiesExists = driver.FindElements(By.XPath("//button[@id = 'onetrust-accept-btn-handler']")).Count > 0;
+                bool elementCookiesExists = driver.FindElements(By.XPath(configuration.GetSection("StartPage:Locators:buttonAcceptCookies_locator").Value)).Count > 0;
                 if (elementCookiesExists)
                 {
                     startPage.AcceptCookie();
@@ -96,14 +96,14 @@ public class LoginTest : BaseTest
                 
                 // navigate to "login.post.at" Page and check title
                 UserLoginPage userLoginPage = new UserLoginPage(driver);
-                Assert.That("Userlogin - Default", Is.EqualTo(userLoginPage.GetPageTitle()));
+                Assert.That(configuration.GetSection("UserLoginPage:TestData:UserLoginPageTitle").Value, Is.EqualTo(userLoginPage.GetPageTitle()));
                 log.Info("User Login Post AG Page opened.");
                 
                 // click 'Jetzt einloggen' button and check if Email/Password errors are displayed 
                 userLoginPage.clickLoginButton();
                 Thread.Sleep(1000);
-                Assert.True(driver.FindElement(By.XPath("//p[contains(@role, 'alert') and contains(text(), 'Bitte E-Mail Adresse eingeben.')]")).Displayed);
-                Assert.True(driver.FindElement(By.XPath("//p[contains(@role, 'alert') and contains(text(), 'Bitte Passwort eingeben.')]")).Displayed);
+                Assert.True(driver.FindElement(By.XPath(configuration.GetSection("StartPage:Locators:textEmailPassword_locator").Value)).Displayed);
+                Assert.True(driver.FindElement(By.XPath(configuration.GetSection("StartPage:Locators:textErrorPassword_locator").Value)).Displayed);
                 log.Info("Email/Password errors are displayed.");
             }
             finally
@@ -123,11 +123,11 @@ public class LoginTest : BaseTest
             {
                 // navigate to "post.at" Page and check title
                 StartPage startPage = new StartPage(driver);
-                Assert.That("Post AG - PostAG", Is.EqualTo(startPage.GetPageTitle()));
+                Assert.That(configuration.GetSection("StartPage:TestData:startPageTitle").Value, Is.EqualTo(startPage.GetPageTitle()));
                 log.Info("Post AG start Page opened.");
                 
                 // click accept cookies button
-                bool elementCookiesExists = driver.FindElements(By.XPath("//button[@id = 'onetrust-accept-btn-handler']")).Count > 0;
+                bool elementCookiesExists = driver.FindElements(By.XPath(configuration.GetSection("StartPage:Locators:buttonAcceptCookies_locator").Value)).Count > 0;
                 if (elementCookiesExists)
                 {
                     startPage.AcceptCookie();
@@ -140,15 +140,15 @@ public class LoginTest : BaseTest
                 
                 // navigate to "login.post.at" Page and check title
                 UserLoginPage userLoginPage = new UserLoginPage(driver);
-                Assert.That("Userlogin - Default", Is.EqualTo(userLoginPage.GetPageTitle()));
+                Assert.That(configuration.GetSection("UserLoginPage:TestData:UserLoginPageTitle").Value, Is.EqualTo(userLoginPage.GetPageTitle()));
                 log.Info("User Login Post AG Page opened.");
 
                 // click 'Jetzt einloggen' button and check if Login failed message is displayed 
-                userLoginPage.inputLoginCredentials("test", "postATtest2023!");
+                userLoginPage.inputLoginCredentials(configuration.GetSection("UserLoginPage:TestData:email_invalid").Value, configuration.GetSection("UserLoginPage:TestData:password").Value);
                 userLoginPage.clickLoginButton();
                 userLoginPage.clickLoginButton();
                 Thread.Sleep(1000);
-                Assert.True(driver.FindElement(By.XPath("//p[contains(@role, 'alert') and contains(text(), 'Ungültige E-Mail Adresse.')]")).Displayed);
+                Assert.True(driver.FindElement(By.XPath(configuration.GetSection("StartPage:Locators:textErrorEmailInvalid_locator").Value)).Displayed);
                 log.Info("Login failed message is displayed.");
             }
             finally
@@ -168,11 +168,11 @@ public class LoginTest : BaseTest
             {
                 // navigate to "post.at" Page and check title
                 StartPage startPage = new StartPage(driver);
-                Assert.That("Post AG - PostAG", Is.EqualTo(startPage.GetPageTitle()));
+                Assert.That(configuration.GetSection("StartPage:TestData:startPageTitle").Value, Is.EqualTo(startPage.GetPageTitle()));
                 log.Info("Post AG start Page opened.");
                 
                 // click accept cookies button
-                bool elementCookiesExists = driver.FindElements(By.XPath("//button[@id = 'onetrust-accept-btn-handler']")).Count > 0;
+                bool elementCookiesExists = driver.FindElements(By.XPath(configuration.GetSection("StartPage:Locators:buttonAcceptCookies_locator").Value)).Count > 0;
                 if (elementCookiesExists)
                 {
                     startPage.AcceptCookie();
@@ -185,15 +185,15 @@ public class LoginTest : BaseTest
                 
                 // navigate to "login.post.at" Page and check title
                 UserLoginPage userLoginPage = new UserLoginPage(driver);
-                Assert.That("Userlogin - Default", Is.EqualTo(userLoginPage.GetPageTitle()));
+                Assert.That(configuration.GetSection("UserLoginPage:TestData:UserLoginPageTitle").Value, Is.EqualTo(userLoginPage.GetPageTitle()));
                 log.Info("User Login Post AG Page opened.");
 
                 // click 'Jetzt einloggen' button and check if Login failed message is displayed 
-                userLoginPage.inputLoginCredentials("test@gmail.com", "postATtest2023!");
+                userLoginPage.inputLoginCredentials(configuration.GetSection("UserLoginPage:TestData:email_wrong").Value, configuration.GetSection("UserLoginPage:TestData:password").Value);
                 userLoginPage.clickLoginButton();
                 Thread.Sleep(1000);
-                Assert.True(driver.FindElement(By.XPath("//h2[contains(text(), 'Login fehlgeschlagen')]")).Displayed);
-                Assert.True(driver.FindElement(By.XPath("//h3[contains(text(), 'Bitte versuchen Sie es nochmals!')]")).Displayed);
+                Assert.True(driver.FindElement(By.XPath(configuration.GetSection("StartPage:Locators:textErrorLoginFailedH2_locator").Value)).Displayed);
+                Assert.True(driver.FindElement(By.XPath(configuration.GetSection("StartPage:Locators:textErrorLoginFailedH3_locator").Value)).Displayed);
                 log.Info("Login failed message is displayed.");
             }
             finally
@@ -213,11 +213,11 @@ public class LoginTest : BaseTest
             {
                 // navigate to "post.at" Page and check title
                 StartPage startPage = new StartPage(driver);
-                Assert.That("Post AG - PostAG", Is.EqualTo(startPage.GetPageTitle()));
+                Assert.That(configuration.GetSection("StartPage:TestData:startPageTitle").Value, Is.EqualTo(startPage.GetPageTitle()));
                 log.Info("Post AG start Page opened.");
                 
                 // click accept cookies button
-                bool elementCookiesExists = driver.FindElements(By.XPath("//button[@id = 'onetrust-accept-btn-handler']")).Count > 0;
+                bool elementCookiesExists = driver.FindElements(By.XPath(configuration.GetSection("StartPage:Locators:buttonAcceptCookies_locator").Value)).Count > 0;
                 if (elementCookiesExists)
                 {
                     startPage.AcceptCookie();
@@ -230,15 +230,15 @@ public class LoginTest : BaseTest
                 
                 // navigate to "login.post.at" Page and check title
                 UserLoginPage userLoginPage = new UserLoginPage(driver);
-                Assert.That("Userlogin - Default", Is.EqualTo(userLoginPage.GetPageTitle()));
+                Assert.That(configuration.GetSection("UserLoginPage:TestData:UserLoginPageTitle").Value, Is.EqualTo(userLoginPage.GetPageTitle()));
                 log.Info("User Login Post AG Page opened.");
 
                 // click 'Jetzt einloggen' button and check if Login failed message is displayed 
-                userLoginPage.inputLoginCredentials("max.musterman.postat.test@gmail.com", "test");
+                userLoginPage.inputLoginCredentials(configuration.GetSection("UserLoginPage:TestData:email").Value, configuration.GetSection("UserLoginPage:TestData:password_wrong").Value);
                 userLoginPage.clickLoginButton();
                 Thread.Sleep(1000);
-                Assert.True(driver.FindElement(By.XPath("//h2[contains(text(), 'Login fehlgeschlagen')]")).Displayed);
-                Assert.True(driver.FindElement(By.XPath("//h3[contains(text(), 'Bitte versuchen Sie es nochmals!')]")).Displayed);
+                Assert.True(driver.FindElement(By.XPath(configuration.GetSection("StartPage:Locators:textErrorLoginFailedH2_locator").Value)).Displayed);
+                Assert.True(driver.FindElement(By.XPath(configuration.GetSection("StartPage:Locators:textErrorLoginFailedH3_locator").Value)).Displayed);
                 log.Info("Login failed message is displayed.");
             }
             finally
@@ -258,11 +258,11 @@ public class LoginTest : BaseTest
             {
                 // navigate to "post.at" Page and check title
                 StartPage startPage = new StartPage(driver);
-                Assert.That("Post AG - PostAG", Is.EqualTo(startPage.GetPageTitle()));
+                Assert.That(configuration.GetSection("StartPage:TestData:startPageTitle").Value, Is.EqualTo(startPage.GetPageTitle()));
                 log.Info("Post AG start Page opened.");
                 
                 // click accept cookies button
-                bool elementCookiesExists = driver.FindElements(By.XPath("//button[@id = 'onetrust-accept-btn-handler']")).Count > 0;
+                bool elementCookiesExists = driver.FindElements(By.XPath(configuration.GetSection("StartPage:Locators:buttonAcceptCookies_locator").Value)).Count > 0;
                 if (elementCookiesExists)
                 {
                     startPage.AcceptCookie();
@@ -275,15 +275,15 @@ public class LoginTest : BaseTest
                 
                 // navigate to "login.post.at" Page and check title
                 UserLoginPage userLoginPage = new UserLoginPage(driver);
-                Assert.That("Userlogin - Default", Is.EqualTo(userLoginPage.GetPageTitle()));
+                Assert.That(configuration.GetSection("UserLoginPage:TestData:UserLoginPageTitle").Value, Is.EqualTo(userLoginPage.GetPageTitle()));
                 log.Info("User Login Post AG Page opened.");
 
                 // click 'Jetzt einloggen' button and check if Login failed message is displayed
-                userLoginPage.inputLoginCredentials("test@gmail.com", "test");
+                userLoginPage.inputLoginCredentials(configuration.GetSection("UserLoginPage:TestData:email_wrong").Value, configuration.GetSection("UserLoginPage:TestData:password_wrong").Value);
                 userLoginPage.clickLoginButton();
                 Thread.Sleep(1000);
-                Assert.True(driver.FindElement(By.XPath("//h2[contains(text(), 'Login fehlgeschlagen')]")).Displayed);
-                Assert.True(driver.FindElement(By.XPath("//h3[contains(text(), 'Bitte versuchen Sie es nochmals!')]")).Displayed);
+                Assert.True(driver.FindElement(By.XPath(configuration.GetSection("StartPage:Locators:textErrorLoginFailedH2_locator").Value)).Displayed);
+                Assert.True(driver.FindElement(By.XPath(configuration.GetSection("StartPage:Locators:textErrorLoginFailedH3_locator").Value)).Displayed);
                 log.Info("Login failed message is displayed.");
             }
             finally
