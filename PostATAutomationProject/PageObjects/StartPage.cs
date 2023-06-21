@@ -11,18 +11,19 @@ class StartPage
 {
     IWebDriver driver;
     WebDriverWait wait;
-    static IConfiguration configuration;
+    IConfiguration configuration;
 
     // Locators
-    private readonly By inputSearch_locator = By.XPath(configuration.GetSection("StartPage:Locators:inputSearch_locator").Value);
-    private readonly By buttonAcceptCookies_locator = By.XPath(configuration.GetSection("StartPage:Locators:buttonAcceptCookies_locator").Value);
-    private readonly By buttonLogin_locator = By.XPath(configuration.GetSection("StartPage:Locators:buttonLogin_locator").Value);
-    private readonly By buttonUserContextmenu_locator = By.XPath(configuration.GetSection("StartPage:Locators:buttonUserContextmenu_locator").Value);
-    private readonly By buttonUserContextmenuLogout_locator = By.XPath(configuration.GetSection("StartPage:Locators:buttonUserContextmenuLogout_locator").Value);
+    private By inputSearch_locator => By.XPath(configuration.GetSection("StartPage:Locators:inputSearch_locator").Value);
+    private By buttonAcceptCookies_locator => By.XPath(configuration.GetSection("StartPage:Locators:buttonAcceptCookies_locator").Value);
+    private By buttonLogin_locator => By.XPath(configuration.GetSection("StartPage:Locators:buttonLogin_locator").Value);
+    private By buttonUserContextmenu_locator => By.XPath(configuration.GetSection("StartPage:Locators:buttonUserContextmenu_locator").Value);
+    private By buttonUserContextmenuLogout_locator => By.XPath(configuration.GetSection("StartPage:Locators:buttonUserContextmenuLogout_locator").Value);
 
-    public StartPage(IWebDriver driver)
+    public StartPage(IWebDriver driver, IConfiguration configuration)
     {
         this.driver = driver;
+        this.configuration = configuration;
         this.wait = new WebDriverWait(driver, TimeSpan.FromSeconds(60));
     }
 
@@ -67,7 +68,7 @@ class StartPage
         IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)driver;
         jsExecutor.ExecuteScript("arguments[0].click();", elementButtonLogin);
         Thread.Sleep(1000);
-        return new UserLoginPage(driver);
+        return new UserLoginPage(driver, configuration);
     }
     
     public void clickLogoutButton()

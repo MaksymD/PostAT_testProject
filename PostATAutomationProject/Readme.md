@@ -1,8 +1,9 @@
 ﻿### TODO:
-configuration.GetSection("StartPage:Locators:buttonCookiesAccept_locator").Value
-***- add property file***
+***- improve BaseTest.cs***
 
 ***- improve reporting***
+
+***- add testsuite***
 
 ### LOGIN DATA:
 #### Gmail:
@@ -18,6 +19,7 @@ configuration.GetSection("StartPage:Locators:buttonCookiesAccept_locator").Value
 **Positive Tests (Valid Credentials):**
 
 > Successful login after resetting the password in "Login & Einstellungen" with a new password.
+
 > Successful login after resetting the password in Login Page by clicking "Passwort vergessen?" and resetting to a new password.
 
 **Negative Tests (Invalid Credentials):**

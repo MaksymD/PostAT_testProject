@@ -26,7 +26,7 @@ public class LoginTest : BaseTest
             {
                 // navigate to "post.at" Page and check title
                 WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(60));
-                StartPage startPage = new StartPage(driver);
+                StartPage startPage = new StartPage(driver, configuration);
                 Assert.That(configuration.GetSection("StartPage:TestData:startPageTitle").Value, Is.EqualTo(startPage.GetPageTitle()));
                 log.Info("Post AG start Page opened.");
                 
@@ -43,7 +43,7 @@ public class LoginTest : BaseTest
                 log.Info("'Einloggen / Registrieren' button clicked.");
                 
                 // navigate to "login.post.at" Page and check title
-                UserLoginPage userLoginPage = new UserLoginPage(driver);
+                UserLoginPage userLoginPage = new UserLoginPage(driver, configuration);
                 Assert.That(configuration.GetSection("UserLoginPage:TestData:userLoginPageTitle").Value, Is.EqualTo(userLoginPage.GetPageTitle()));
                 log.Info("User Login Post AG Page opened.");
                 
@@ -78,7 +78,7 @@ public class LoginTest : BaseTest
             try
             {
                 // navigate to "post.at" Page and check title
-                StartPage startPage = new StartPage(driver);
+                StartPage startPage = new StartPage(driver, configuration);
                 Assert.That(configuration.GetSection("StartPage:TestData:startPageTitle").Value, Is.EqualTo(startPage.GetPageTitle()));
                 log.Info("Post AG start Page opened.");
                 
@@ -95,15 +95,15 @@ public class LoginTest : BaseTest
                 log.Info("'Einloggen / Registrieren' button clicked.");
                 
                 // navigate to "login.post.at" Page and check title
-                UserLoginPage userLoginPage = new UserLoginPage(driver);
+                UserLoginPage userLoginPage = new UserLoginPage(driver, configuration);
                 Assert.That(configuration.GetSection("UserLoginPage:TestData:UserLoginPageTitle").Value, Is.EqualTo(userLoginPage.GetPageTitle()));
                 log.Info("User Login Post AG Page opened.");
                 
                 // click 'Jetzt einloggen' button and check if Email/Password errors are displayed 
                 userLoginPage.clickLoginButton();
                 Thread.Sleep(1000);
-                Assert.True(driver.FindElement(By.XPath(configuration.GetSection("StartPage:Locators:textEmailPassword_locator").Value)).Displayed);
-                Assert.True(driver.FindElement(By.XPath(configuration.GetSection("StartPage:Locators:textErrorPassword_locator").Value)).Displayed);
+                Assert.True(driver.FindElement(By.XPath(configuration.GetSection("UserLoginPage:Locators:textEmailPassword_locator").Value)).Displayed);
+                Assert.True(driver.FindElement(By.XPath(configuration.GetSection("UserLoginPage:Locators:textErrorPassword_locator").Value)).Displayed);
                 log.Info("Email/Password errors are displayed.");
             }
             finally
@@ -122,7 +122,7 @@ public class LoginTest : BaseTest
             try
             {
                 // navigate to "post.at" Page and check title
-                StartPage startPage = new StartPage(driver);
+                StartPage startPage = new StartPage(driver, configuration);
                 Assert.That(configuration.GetSection("StartPage:TestData:startPageTitle").Value, Is.EqualTo(startPage.GetPageTitle()));
                 log.Info("Post AG start Page opened.");
                 
@@ -139,7 +139,7 @@ public class LoginTest : BaseTest
                 log.Info("'Einloggen / Registrieren' button clicked.");
                 
                 // navigate to "login.post.at" Page and check title
-                UserLoginPage userLoginPage = new UserLoginPage(driver);
+                UserLoginPage userLoginPage = new UserLoginPage(driver, configuration);
                 Assert.That(configuration.GetSection("UserLoginPage:TestData:UserLoginPageTitle").Value, Is.EqualTo(userLoginPage.GetPageTitle()));
                 log.Info("User Login Post AG Page opened.");
 
@@ -148,7 +148,7 @@ public class LoginTest : BaseTest
                 userLoginPage.clickLoginButton();
                 userLoginPage.clickLoginButton();
                 Thread.Sleep(1000);
-                Assert.True(driver.FindElement(By.XPath(configuration.GetSection("StartPage:Locators:textErrorEmailInvalid_locator").Value)).Displayed);
+                Assert.True(driver.FindElement(By.XPath(configuration.GetSection("UserLoginPage:Locators:textErrorEmailInvalid_locator").Value)).Displayed);
                 log.Info("Login failed message is displayed.");
             }
             finally
@@ -167,7 +167,7 @@ public class LoginTest : BaseTest
             try
             {
                 // navigate to "post.at" Page and check title
-                StartPage startPage = new StartPage(driver);
+                StartPage startPage = new StartPage(driver, configuration);
                 Assert.That(configuration.GetSection("StartPage:TestData:startPageTitle").Value, Is.EqualTo(startPage.GetPageTitle()));
                 log.Info("Post AG start Page opened.");
                 
@@ -184,7 +184,7 @@ public class LoginTest : BaseTest
                 log.Info("'Einloggen / Registrieren' button clicked.");
                 
                 // navigate to "login.post.at" Page and check title
-                UserLoginPage userLoginPage = new UserLoginPage(driver);
+                UserLoginPage userLoginPage = new UserLoginPage(driver, configuration);
                 Assert.That(configuration.GetSection("UserLoginPage:TestData:UserLoginPageTitle").Value, Is.EqualTo(userLoginPage.GetPageTitle()));
                 log.Info("User Login Post AG Page opened.");
 
@@ -192,8 +192,8 @@ public class LoginTest : BaseTest
                 userLoginPage.inputLoginCredentials(configuration.GetSection("UserLoginPage:TestData:email_wrong").Value, configuration.GetSection("UserLoginPage:TestData:password").Value);
                 userLoginPage.clickLoginButton();
                 Thread.Sleep(1000);
-                Assert.True(driver.FindElement(By.XPath(configuration.GetSection("StartPage:Locators:textErrorLoginFailedH2_locator").Value)).Displayed);
-                Assert.True(driver.FindElement(By.XPath(configuration.GetSection("StartPage:Locators:textErrorLoginFailedH3_locator").Value)).Displayed);
+                Assert.True(driver.FindElement(By.XPath(configuration.GetSection("UserLoginPage:Locators:textErrorLoginFailedH2_locator").Value)).Displayed);
+                Assert.True(driver.FindElement(By.XPath(configuration.GetSection("UserLoginPage:Locators:textErrorLoginFailedH3_locator").Value)).Displayed);
                 log.Info("Login failed message is displayed.");
             }
             finally
@@ -212,7 +212,7 @@ public class LoginTest : BaseTest
             try
             {
                 // navigate to "post.at" Page and check title
-                StartPage startPage = new StartPage(driver);
+                StartPage startPage = new StartPage(driver, configuration);
                 Assert.That(configuration.GetSection("StartPage:TestData:startPageTitle").Value, Is.EqualTo(startPage.GetPageTitle()));
                 log.Info("Post AG start Page opened.");
                 
@@ -229,7 +229,7 @@ public class LoginTest : BaseTest
                 log.Info("'Einloggen / Registrieren' button clicked.");
                 
                 // navigate to "login.post.at" Page and check title
-                UserLoginPage userLoginPage = new UserLoginPage(driver);
+                UserLoginPage userLoginPage = new UserLoginPage(driver, configuration);
                 Assert.That(configuration.GetSection("UserLoginPage:TestData:UserLoginPageTitle").Value, Is.EqualTo(userLoginPage.GetPageTitle()));
                 log.Info("User Login Post AG Page opened.");
 
@@ -237,8 +237,8 @@ public class LoginTest : BaseTest
                 userLoginPage.inputLoginCredentials(configuration.GetSection("UserLoginPage:TestData:email").Value, configuration.GetSection("UserLoginPage:TestData:password_wrong").Value);
                 userLoginPage.clickLoginButton();
                 Thread.Sleep(1000);
-                Assert.True(driver.FindElement(By.XPath(configuration.GetSection("StartPage:Locators:textErrorLoginFailedH2_locator").Value)).Displayed);
-                Assert.True(driver.FindElement(By.XPath(configuration.GetSection("StartPage:Locators:textErrorLoginFailedH3_locator").Value)).Displayed);
+                Assert.True(driver.FindElement(By.XPath(configuration.GetSection("UserLoginPage:Locators:textErrorLoginFailedH2_locator").Value)).Displayed);
+                Assert.True(driver.FindElement(By.XPath(configuration.GetSection("UserLoginPage:Locators:textErrorLoginFailedH3_locator").Value)).Displayed);
                 log.Info("Login failed message is displayed.");
             }
             finally
@@ -257,7 +257,7 @@ public class LoginTest : BaseTest
             try
             {
                 // navigate to "post.at" Page and check title
-                StartPage startPage = new StartPage(driver);
+                StartPage startPage = new StartPage(driver, configuration);
                 Assert.That(configuration.GetSection("StartPage:TestData:startPageTitle").Value, Is.EqualTo(startPage.GetPageTitle()));
                 log.Info("Post AG start Page opened.");
                 
@@ -274,7 +274,7 @@ public class LoginTest : BaseTest
                 log.Info("'Einloggen / Registrieren' button clicked.");
                 
                 // navigate to "login.post.at" Page and check title
-                UserLoginPage userLoginPage = new UserLoginPage(driver);
+                UserLoginPage userLoginPage = new UserLoginPage(driver, configuration);
                 Assert.That(configuration.GetSection("UserLoginPage:TestData:UserLoginPageTitle").Value, Is.EqualTo(userLoginPage.GetPageTitle()));
                 log.Info("User Login Post AG Page opened.");
 
@@ -282,8 +282,8 @@ public class LoginTest : BaseTest
                 userLoginPage.inputLoginCredentials(configuration.GetSection("UserLoginPage:TestData:email_wrong").Value, configuration.GetSection("UserLoginPage:TestData:password_wrong").Value);
                 userLoginPage.clickLoginButton();
                 Thread.Sleep(1000);
-                Assert.True(driver.FindElement(By.XPath(configuration.GetSection("StartPage:Locators:textErrorLoginFailedH2_locator").Value)).Displayed);
-                Assert.True(driver.FindElement(By.XPath(configuration.GetSection("StartPage:Locators:textErrorLoginFailedH3_locator").Value)).Displayed);
+                Assert.True(driver.FindElement(By.XPath(configuration.GetSection("UserLoginPage:Locators:textErrorLoginFailedH2_locator").Value)).Displayed);
+                Assert.True(driver.FindElement(By.XPath(configuration.GetSection("UserLoginPage:Locators:textErrorLoginFailedH3_locator").Value)).Displayed);
                 log.Info("Login failed message is displayed.");
             }
             finally
